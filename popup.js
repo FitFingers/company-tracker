@@ -1,4 +1,4 @@
-// import { helloWorld } from "./general-functions";
+const handlers = new Handlers();
 
 // ===================================================
 // BUTTONS
@@ -24,8 +24,8 @@ yesterdayButton.addEventListener("click", async () => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    // function: helloWorld,
-    function: logYesterdayHours,
+    function: handlers.logToday,
+    // function: logYesterdayHours,
   });
 });
 
