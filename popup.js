@@ -1,9 +1,17 @@
-// buttons
+// import { helloWorld } from "./general-functions";
+
+// ===================================================
+// BUTTONS
+// ===================================================
+
 const todayButton = document.getElementById("today-button");
 const yesterdayButton = document.getElementById("yesterday-button");
 const thisWeekButton = document.getElementById("this-week-button");
 
-// event listeners
+// ===================================================
+// EVENT LISTENERS
+// ===================================================
+
 todayButton.addEventListener("click", async () => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   chrome.scripting.executeScript({
@@ -16,6 +24,7 @@ yesterdayButton.addEventListener("click", async () => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
+    // function: helloWorld,
     function: logYesterdayHours,
   });
 });
@@ -28,10 +37,11 @@ thisWeekButton.addEventListener("click", async () => {
   });
 });
 
+// ===================================================
+// GENERAL FUNCTIONS
+// ===================================================
+
 function logTodayHours() {
-  // ===================================================
-  // FUNCTIONS
-  // ===================================================
   function logAll(entries = [], options = { showTime: true }) {
     const { showTime = true, showDate, showProject, showTask } = options;
 
