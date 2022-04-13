@@ -1,17 +1,37 @@
 button {
+  position: relative;
   outline: none;
   margin: 8px;
   border: none;
   border-radius: 4px;
   padding: 16px;
   width: -webkit-fill-available;
-  color: #fffe;
+  color: #fff;
   font-weight: bold;
   font-family: "system-ui";
+  cursor: pointer;
+  transition: box-shadow 225ms;
 }
 
-button.current {
-  box-shadow: 0 0 0 2px white, 0 0 0 4px black;
+button:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  background: #0000;
+  transition: background 225ms;
+}
+
+button:hover {
+  box-shadow: 0 0 6px 1px #0003, 0 0 12px 0 #0006;
+}
+
+button:hover:before {
+  background: #0003;
+}
+
+button span {
+  position: relative;
 }
 
 #today-button {
