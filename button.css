@@ -1,11 +1,42 @@
 button {
   outline: none;
-  margin: 10px;
+  margin: 8px;
   border: none;
   border-radius: 4px;
-  padding: 8px 16px;
+  padding: 16px;
+  width: -webkit-fill-available;
+  color: #fffe;
+  font-weight: bold;
+  font-family: "system-ui";
 }
 
 button.current {
   box-shadow: 0 0 0 2px white, 0 0 0 4px black;
+}
+
+#today-button {
+  background: rgb(26, 21, 117);
+  background: linear-gradient(
+    31deg,
+    rgba(26, 21, 117, 1) 0%,
+    rgba(8, 210, 250, 1) 100%
+  );
+}
+
+#yesterday-button {
+  background: rgb(16, 102, 26);
+  background: linear-gradient(
+    31deg,
+    rgba(16, 102, 26, 1) 0%,
+    rgba(6, 200, 132, 1) 100%
+  );
+}
+
+#this-week-button {
+  background: rgb(191, 125, 34);
+  background: linear-gradient(
+    31deg,
+    rgba(191, 125, 34, 1) 0%,
+    rgba(255, 215, 0, 1) 100%
+  );
 }

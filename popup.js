@@ -1,15 +1,34 @@
-let countHoursButton = document.getElementById("count-hours-button");
+// buttons
+const todayButton = document.getElementById("today-button");
+const yesterdayButton = document.getElementById("yesterday-button");
+const thisWeekButton = document.getElementById("this-week-button");
 
-countHoursButton.addEventListener("click", async () => {
+// event listeners
+todayButton.addEventListener("click", async () => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    function: logAggregateHours,
+    function: logTodayHours,
   });
 });
 
-function logAggregateHours() {
+yesterdayButton.addEventListener("click", async () => {
+  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    function: logYesterdayHours,
+  });
+});
+
+thisWeekButton.addEventListener("click", async () => {
+  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  chrome.scripting.executeScript({
+    target: { tabId: tab.id },
+    function: logThisWeekHours,
+  });
+});
+
+function logTodayHours() {
   // ===================================================
   // FUNCTIONS
   // ===================================================
@@ -96,9 +115,17 @@ function logAggregateHours() {
 
   // Total aggregate
   console.log(
-    `%cHours worked: ${totalValues.hours + Math.floor(totalValues.minutes / 60)}h ${
-      totalValues.minutes % 60
-    }m`,
+    `%cHours worked: ${
+      totalValues.hours + Math.floor(totalValues.minutes / 60)
+    }h ${totalValues.minutes % 60}m`,
     "font-size:24px"
   );
+}
+
+// upcoming features
+function logYesterdayHours() {
+  console.log(`DEBUG Yesterday`);
+}
+function logThisWeekHours() {
+  console.log(`DEBUG ThisWeek`);
 }
