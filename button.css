@@ -20,10 +20,11 @@ button:before {
   border-radius: 4px;
   background: #0000;
   transition: background 225ms;
+  box-shadow: 0 0 3px 0px #0002, 0 0 6px 0 #0003;
 }
 
 button:hover {
-  box-shadow: 0 0 6px 1px #0003, 0 0 12px 0 #0006;
+  box-shadow: 0 0 5px 1px #0003, 0 0 10px 0 #0005;
 }
 
 button:hover:before {
