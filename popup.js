@@ -39,6 +39,8 @@ thisWeekButton.addEventListener("click", async () => {
 // ===================================================
 
 function logTodayHours() {
+  const today = `${new Date().getDate()}.`;
+
   function logAll(entries = [], options = { showTime: true }) {
     const { showTime = true, showDate, showProject, showTask } = options;
 
@@ -106,11 +108,7 @@ function logTodayHours() {
 
   // CORE LOGIC
   // ===================================================
-
-  const today = `${new Date().getDate()}.`;
   const allEntries = getEntries();
-  console.log(`DEBUG all`, { allEntries, today });
-
   const totalValues = aggregateEntries(allEntries);
 
   // Error handling
@@ -125,8 +123,9 @@ function logTodayHours() {
   console.log(
     `%cHours worked: ${
       totalValues.hours + Math.floor(totalValues.minutes / 60)
-    }h ${totalValues.minutes % 60}m`,
-    "font-size:24px"
+    }h ${totalValues.minutes % 60}m %cDEBUG`,
+    "font-size:24px",
+    "font-size:1px;color:transparent;"
   );
 }
 
@@ -135,6 +134,10 @@ function logTodayHours() {
 // ===================================================
 
 function logYesterdayHours() {
+  const yesterday = `${new Date(
+    new Date().setDate(new Date().getDate() - 1)
+  ).getDate()}.`;
+
   function logAll(entries = [], options = { showTime: true }) {
     const { showTime = true, showDate, showProject, showTask } = options;
 
@@ -202,13 +205,7 @@ function logYesterdayHours() {
 
   // CORE LOGIC
   // ===================================================
-
-  const yesterday = `${new Date(
-    new Date().setDate(new Date().getDate() - 1)
-  ).getDate()}.`;
   const allEntries = getEntries();
-  console.log(`DEBUG all`, { allEntries, yesterday });
-
   const totalValues = aggregateEntries(allEntries);
 
   // Error handling
@@ -223,8 +220,9 @@ function logYesterdayHours() {
   console.log(
     `%cHours worked: ${
       totalValues.hours + Math.floor(totalValues.minutes / 60)
-    }h ${totalValues.minutes % 60}m`,
-    "font-size:24px"
+    }h ${totalValues.minutes % 60}m %cDEBUG`,
+    "font-size:24px",
+    "font-size:1px;color:transparent;"
   );
 }
 
@@ -233,5 +231,94 @@ function logYesterdayHours() {
 // ===================================================
 
 function logThisWeekHours() {
-  console.log("coming soon");
+  const today = new Date();
+  const startOfWeek = getStartOfWeek(today);
+  const daysDifference = getNumDaysDifference(today, startOfWeek);
+  const allDateStrings = getDateStrings(today, daysDifference);
+
+  function getStartOfWeek(date) {
+    const day = date.getDay();
+    const diff = date.getDate() - day + (!day ? -6 : 1);
+    return new Date(new Date().setDate(diff));
+  }
+
+  function getNumDaysDifference(startDate, endDate) {
+    return Math.abs((endDate - startDate) / (1000 * 60 * 60 * 24));
+  }
+
+  function getDateStrings(date, daysBack) {
+    return [...Array(daysBack)].map((_, idx) => {
+      const _date = new Date(date);
+      return `${new Date(_date.setDate(_date.getDate() - idx)).getDate()}.`;
+    });
+  }
+
+  function logAll(entries = [], options = { showTime: true }) {
+    const { showTime = true, showDate, showProject, showTask } = options;
+
+    if (!entries.length) return;
+
+    console.log("All entries:");
+    console.table(
+      entries.map((entry) => {
+        const [task, project, date, time] = [...entry.children].map(
+          (v) => v.innerText
+        );
+
+        const result = {};
+        if (showTime) result.time = time;
+        if (showDate) result.date = date;
+        if (showProject) result.project = project;
+        if (showTask) result.task = task;
+
+        return result;
+      })
+    );
+  }
+
+  function getEntries(date) {
+    return [...document.querySelectorAll(".MuiTableRow-root")].filter((entry) =>
+      entry.children[2].innerText.includes(date)
+    );
+  }
+
+  function aggregateEntries(entries) {
+    if (!entries.length) return;
+    return entries.reduce(
+      (acc, entry) => {
+        const [hours, minutes] = entry.children[3].innerText
+          .split(" ")
+          .map((v) => Number(v.match(/\d{1,2}/)?.[0]));
+        return {
+          hours: acc.hours + hours,
+          minutes: acc.minutes + minutes,
+        };
+      },
+      {
+        hours: 0,
+        minutes: 0,
+      }
+    );
+  }
+
+  // CORE LOGIC
+  // ===================================================
+  const allEntries = allDateStrings.reduce(
+    (acc, date) => [...acc, ...getEntries(date)],
+    []
+  );
+
+  const totalValues = aggregateEntries(allEntries);
+
+  // All entry times, projects and tasks
+  logAll(allEntries);
+
+  // Total aggregate
+  console.log(
+    `%cHours worked: ${
+      totalValues.hours + Math.floor(totalValues.minutes / 60)
+    }h ${totalValues.minutes % 60}m %cDEBUG`,
+    "font-size:24px",
+    "font-size:1px;color:transparent;"
+  );
 }
