@@ -243,7 +243,7 @@ function logThisWeekHours() {
   }
 
   function getNumDaysDifference(startDate, endDate) {
-    return Math.abs((endDate - startDate) / (1000 * 60 * 60 * 24));
+    return Math.abs((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
   }
 
   function getDateStrings(date, daysBack) {
