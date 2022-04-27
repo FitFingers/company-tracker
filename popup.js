@@ -120,13 +120,16 @@ function logTodayHours() {
   logAll(allEntries);
 
   // Total aggregate
+  const total = `${totalValues.hours + Math.floor(totalValues.minutes / 60)}h ${
+    totalValues.minutes % 60
+  }m`;
+
   console.log(
-    `%cHours worked: ${
-      totalValues.hours + Math.floor(totalValues.minutes / 60)
-    }h ${totalValues.minutes % 60}m %cDEBUG`,
+    `%cHours worked: ${total} %cDEBUG`,
     "font-size:24px",
     "font-size:1px;color:transparent;"
   );
+  alert(`Hours worked: ${total}`);
 }
 
 // ===================================================
@@ -217,13 +220,16 @@ function logYesterdayHours() {
   logAll(allEntries);
 
   // Total aggregate
+  const total = `${totalValues.hours + Math.floor(totalValues.minutes / 60)}h ${
+    totalValues.minutes % 60
+  }m`;
+
   console.log(
-    `%cHours worked: ${
-      totalValues.hours + Math.floor(totalValues.minutes / 60)
-    }h ${totalValues.minutes % 60}m %cDEBUG`,
+    `%cHours worked: ${total} %cDEBUG`,
     "font-size:24px",
     "font-size:1px;color:transparent;"
   );
+  alert(`Hours worked: ${total}`);
 }
 
 // ===================================================
@@ -314,11 +320,14 @@ function logThisWeekHours() {
   logAll(allEntries);
 
   // Total aggregate
+  const total = `${totalValues.hours + Math.floor(totalValues.minutes / 60)}h ${
+    totalValues.minutes % 60
+  }m`;
+
   console.log(
-    `%cHours worked: ${
-      totalValues.hours + Math.floor(totalValues.minutes / 60)
-    }h ${totalValues.minutes % 60}m %cDEBUG`,
+    `%cHours worked: ${total} %cDEBUG`,
     "font-size:24px",
     "font-size:1px;color:transparent;"
   );
+  alert(`Hours worked: ${total}`);
 }
